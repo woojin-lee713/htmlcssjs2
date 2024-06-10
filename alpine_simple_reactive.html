@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Alpine.js with Tailwind CSS</title>
+        <script
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.3/dist/cdn.min.js"
+            defer
+        ></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="bg-gray-100 p-6">
+        <div class="max-w-sm mx-auto bg-white p-4 rounded shadow">
+            <button class="px-4 py-2 bg-gray-500 text-white rounded">
+                BUTTON
+            </button>
+            <span>TEXT</span>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                let obj = { color: "blue" };
+                let proxy = Alpine.reactive(obj);
+                console.log(proxy.color); // blue
+                console.log(obj.color); // blue
+                proxy.color = "green";
+                console.log(obj.color); // green
+                Alpine.effect(() => {
+                    console.log(">>>", proxy.color);
+                });
+                proxy.color = "red";
+                let button = document.querySelector("button");
+                let span = document.querySelector("span");
+
+                let proxy2 = Alpine.reactive({ color: "blue" });
+
+                Alpine.effect(() => {
+                    span.textContent = proxy2.color;
+                    button.style.backgroundColor = proxy2.color;
+                });
+
+                button.addEventListener("click", () => {
+                    proxy2.color = proxy2.color == "blue" ? "green" : "blue";
+                });
+            });
+        </script>
+    </body>
+</html>

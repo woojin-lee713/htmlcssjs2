@@ -25,7 +25,7 @@
 
 ```html
 <div x-data="{ isRed: true }">
-  <button :class="{ 'bg-red-500': isRed, 'bg-blue-500': !isRed }">Toggle Color</button>
+  <button @click="isRed = !isRed" :class="{ 'bg-red-500': isRed, 'bg-blue-500': !isRed }">Toggle Color</button>
 </div>
 ```
 

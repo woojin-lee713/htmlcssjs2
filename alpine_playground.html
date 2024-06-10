@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Alpine.js with Tailwind CSS</title>
+        <script
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.2.3/dist/cdn.min.js"
+            defer
+        ></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="bg-gray-100 p-6">
+        <div
+            x-data="{ count: 0 }"
+            class="max-w-sm mx-auto bg-white p-4 rounded shadow"
+        >
+            <h1 class="text-2xl font-bold mb-4">Counter</h1>
+            <button
+                @click="count++"
+                class="px-4 py-2 bg-blue-500 text-white rounded"
+            >
+                Increase
+            </button>
+            <p class="mt-4">Count: <span x-text="count"></span></p>
+        </div>
+        <hr />
+        <div x-data="{ isRed: true }" class="mx-auto max-w-sm">
+            <button
+                @click="isRed = !isRed"
+                :class="{ 'bg-red-500': isRed, 'bg-blue-500': !isRed }"
+            >
+                Toggle Color
+            </button>
+        </div>
+        <hr />
+        <div x-data="{ show: false }" class="mx-auto max-w-sm">
+            <button @click="show = !show">Show/Hide</button>
+            <div x-show="show">This is visible when 'show' is true.</div>
+        </div>
+        <hr />
+        <div x-data="{ message: '' }" class="mx-auto max-w-sm">
+            <input
+                x-model="message"
+                type="text"
+                placeholder="Type something..."
+            />
+            <p x-text="message"></p>
+        </div>
+        <hr />
+        <div x-data="{ items: ['A', 'B', 'C'] }" class="mx-auto max-w-sm">
+            <template x-for="item in items" :key="item">
+                <div x-text="item"></div>
+            </template>
+        </div>
+    </body>
+</html>
