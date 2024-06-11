@@ -14,37 +14,72 @@
         />
     </head>
     <body class="bg-gray-100 p-6">
-        <div class="max-w-sm mx-auto bg-white p-4 rounded shadow">
-            <button class="px-4 py-2 bg-gray-500 text-white rounded">
-                BUTTON
-            </button>
-            <span>TEXT</span>
+        <div
+            class="max-w-sm mx-auto bg-white p-4 rounded shadow"
+            x-data="feedbackApp"
+        >
+            <div class="mb-4">
+                <input
+                    type="text"
+                    class="w-full p-2 border rounded"
+                    x-model="message"
+                    placeholder="Type a message..."
+                />
+            </div>
+            <div class="flex justify-between">
+                <button
+                    @click="submitFeedback('like')"
+                    class="px-4 py-2 bg-green-500 text-white rounded"
+                >
+                    Like
+                </button>
+                <button
+                    @click="submitFeedback('dislike')"
+                    class="px-4 py-2 bg-red-500 text-white rounded"
+                >
+                    Dislike
+                </button>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-lg font-bold">Feedback</h3>
+                <ul>
+                    <template
+                        x-for="feedback in feedbackList"
+                        :key="feedback.id"
+                    >
+                        <li class="py-1">
+                            <span
+                                class="font-semibold"
+                                x-text="feedback.type"
+                            ></span>
+                            - <span x-text="feedback.message"></span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
         </div>
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                let obj = { color: "blue" };
-                let proxy = Alpine.reactive(obj);
-                console.log(proxy.color); // blue
-                console.log(obj.color); // blue
-                proxy.color = "green";
-                console.log(obj.color); // green
-                Alpine.effect(() => {
-                    console.log(">>>", proxy.color);
-                });
-                proxy.color = "red";
-                let button = document.querySelector("button");
-                let span = document.querySelector("span");
-
-                let proxy2 = Alpine.reactive({ color: "blue" });
-
-                Alpine.effect(() => {
-                    span.textContent = proxy2.color;
-                    button.style.backgroundColor = proxy2.color;
-                });
-
-                button.addEventListener("click", () => {
-                    proxy2.color = proxy2.color == "blue" ? "green" : "blue";
-                });
+            document.addEventListener("alpine:init", () => {
+                Alpine.data("feedbackApp", () => ({
+                    message: "",
+                    feedbackList: [
+                        { id: 1, type: "like", message: "Great!" },
+                        {
+                            id: 2,
+                            type: "dislike",
+                            message: "Needs improvement.",
+                        },
+                    ],
+                    submitFeedback(type) {
+                        if (this.message.trim() === "") return;
+                        this.feedbackList.push({
+                            id: this.feedbackList.length + 1,
+                            type: type,
+                            message: this.message,
+                        });
+                        this.message = "";
+                    },
+                }));
             });
         </script>
     </body>
