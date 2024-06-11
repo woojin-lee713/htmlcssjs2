@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Understanding Fetch, Promises, and Async Functions</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="bg-gray-300 p-14">
+        <h1 class="text-2xl font-bold mb-4">Fetch Example</h1>
+        <div class="text-1xl object-center">
+            <span id="myspan"></span>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                <!-- DO SOMETHING HERE -->
+                fetch("/randomtext")
+                    .then(function (response) {
+                        return response.json(); // Promise resolves with parsed JSON
+                    })
+                    .then(function (data) {
+                        document.getElementById("myspan").textContent =
+                            data.text;
+                        console.log(data); // Promise resolves with data
+                    })
+                    .catch(function (error) {
+                        console.error("Error:", error); // Promise resolves with error
+                    });
+            });
+        </script>
+    </body>
+</html>
